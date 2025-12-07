@@ -87,7 +87,7 @@ class AdvancedState(TypedDict):
 ```
 
 ### `MessagesState`
-Since managing a list of chat messages is so common, LangGraph provides a pre-built state class. It uses the `add_messages` reducer, which handles appending new messages and updating existing ones by ID. Learn more about [advanced messaging below](#messages-and-messagestate).
+Since managing a list of chat messages is so common, LangGraph provides a pre-built state class. It uses the `add_messages` reducer, which handles appending new messages and updating existing ones by ID. Learn more about [advanced messaging below](#messages-and-messagesstate).
 
 ```python
 from langgraph.graph import MessagesState
@@ -238,7 +238,7 @@ graph = builder.compile(checkpointer=checkpointer)
 ### Compile Runtime Args
 Compiling provides a few basic checks on the structure of your graph (no orphaned nodes, etc). It is also where you can specify runtime args like [checkpointers](/oss/langgraph/persistence) and breakpoints.
 
-## Messages and `MessageState`
+## Messages and `MessagesState`
 Most modern LLM applications need to store conversation history (a list of HumanMessage and AIMessage objects). LangGraph provides specialized tools to manage this state efficiently.
 
 ### The `add_messages` Reducer
