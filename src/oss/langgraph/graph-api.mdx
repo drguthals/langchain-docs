@@ -100,7 +100,7 @@ class AgentState(MessagesState):
 ## 2. Nodes
 Nodes are standard Python functions. They represent a unit of work (like an LLM call, a database query, or an API request). They receive the current state as input, perform some computation or side-effect, and return an updated state.
 
-## Function Signatures
+### Function Signatures
 Nodes can accept different arguments depending on what they need:
 - **Standard**: `def node(state: State)`
 - **With Config**: `def node(state: State, config: RunnableConfig)`
