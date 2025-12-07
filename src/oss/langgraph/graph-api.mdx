@@ -83,7 +83,7 @@ class AdvancedState(TypedDict):
     status: str
     
     # Reducer: Append new values to the list
-    logs: Annotated[list[str], add]
+    logs: Annotated[list[str], operator.add]
 ```
 
 ### `MessagesState`
@@ -129,9 +129,9 @@ In LangGraph, nodes are Python functions (either synchronous or asynchronous) th
 
 1. `state` – The [state](#state) of the graph
 2. `config` – A @[`RunnableConfig`] object that contains configuration information like `thread_id` and tracing information like `tags`
-3. `runtime` – A `Runtime` object that contains [runtime `context`](#runtime-context) and other information like `store` and `stream_writer`
+3. `runtime` – A `Runtime` object that contains runtime `context` and other information like `store` and `stream_writer`
 
-Behind the scenes, functions are converted to [`RunnableLambda`](https://python.langchain.com/api_reference/core/runnables/langchain_core.runnables.base.RunnableLambda.html), which add batch and async support to your function, along with native tracing and debugging.
+Nodes are wrapped into LangChain runnables to support batching, async execution, and tracing.
 
 If you add a node to a graph without specifying a name, it will be given a default name equivalent to the function name.
 
@@ -349,7 +349,7 @@ In complex agents, tools often need to update the graph state directly (e.g., a 
 
 ### Graph Migrations
 When running agents in production, you will eventually need to update your code (add nodes, change logic) while existing threads are still active. LangGraph handles migrations gracefully with specific compatibility guarantees:
-- **Active Threads (Not Interrupted)**: You can change the entire topology (add/remove/rename nodes and edges) freely.
+- **Active Threads (Not Interrupted)**: You can generally modify topology for new executions, but persisted or interrupted threads impose stricter compatibility constraints depending on the checkpointer backend.
 - **Interrupted Threads**: You can make most topology changes, but avoid renaming or removing nodes that the thread is currently paused on or about to enter.
 - State Schema:
     - *Safe*: Adding new keys or removing unused keys.
